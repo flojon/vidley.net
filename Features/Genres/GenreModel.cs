@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
 namespace vidley.net.Features.Genres
 {
     public class GenreModel
@@ -8,7 +11,10 @@ namespace vidley.net.Features.Genres
             this.Name = name;
         }
 
+        [BindNever]
         public int Id { get; set; }
+        
+        [Required]
         public string Name { get; set; }
     }
 }
