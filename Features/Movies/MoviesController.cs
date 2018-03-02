@@ -60,7 +60,10 @@ namespace vidley.net.Features.Movies
 
             var movie = new Movie(model, genre);
 
-            await _repository.Update(id, movie); // TODO check if movie exist?
+            await _repository.Update(id, movie);
+
+            movie = await _repository.Get(id);
+
             if (movie == null)
                 return NotFound("No movie found with the given id");
 
