@@ -2,11 +2,12 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using vidley.net.Data;
 
 namespace vidley.net.Features.Genres
 {
     [BsonIgnoreExtraElements]
-    public class Genre
+    public class Genre: IEntity
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

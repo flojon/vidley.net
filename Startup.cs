@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,9 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using vidley.net.Data;
-using vidley.net.Features.Customers;
-using vidley.net.Features.Genres;
-using vidley.net.Features.Movies;
 
 namespace vidley.net
 {
@@ -38,10 +35,6 @@ namespace vidley.net
                     = Configuration.GetSection("MongoConnection:Database").Value;
             });
 
-            services.AddSingleton<DbContext, DbContext>();
-            services.AddTransient<IRepository<Genre>, GenreRepository>();
-            services.AddTransient<IRepository<Customer>, CustomerRepository>();
-            services.AddTransient<IRepository<Movie>, MovieRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
         }
 

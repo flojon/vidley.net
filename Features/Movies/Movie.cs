@@ -2,12 +2,13 @@
 using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using vidley.net.Data;
 using vidley.net.Features.Genres;
 
 namespace vidley.net.Features.Movies
 {
     [BsonIgnoreExtraElements]
-    public class Movie
+    public class Movie: IEntity
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

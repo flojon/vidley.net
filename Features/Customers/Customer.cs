@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using vidley.net.Data;
 
 namespace vidley.net.Features.Customers
 {
     [BsonIgnoreExtraElements]
-    public class Customer
+    public class Customer: IEntity
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
