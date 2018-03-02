@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using vidley.net.Data;
+using vidley.net.Features.Genres;
 
 namespace vidley.net
 {
@@ -36,6 +37,7 @@ namespace vidley.net
             });
 
             services.AddSingleton<DbContext, DbContext>();
+            services.AddTransient<IRepository<Genre>, GenreRepository>();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
