@@ -1,8 +1,9 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using vidley.net.Features.Genres;
 using vidley.net;
 using vidley.net.Features.Customers;
+using vidley.net.Features.Genres;
+using vidley.net.Features.Movies;
 
 namespace vidley.net.Data
 {
@@ -25,6 +26,11 @@ namespace vidley.net.Data
         public IMongoCollection<Customer> Customers
         {
             get => _database.GetCollection<Customer>("customers");
+        }
+
+        public IMongoCollection<Movie> Movies
+        {
+            get => _database.GetCollection<Movie>("movies");
         }
     }
 }

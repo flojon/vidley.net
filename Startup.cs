@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using vidley.net.Data;
 using vidley.net.Features.Customers;
 using vidley.net.Features.Genres;
+using vidley.net.Features.Movies;
 
 namespace vidley.net
 {
@@ -40,6 +41,7 @@ namespace vidley.net
             services.AddSingleton<DbContext, DbContext>();
             services.AddTransient<IRepository<Genre>, GenreRepository>();
             services.AddTransient<IRepository<Customer>, CustomerRepository>();
+            services.AddTransient<IRepository<Movie>, MovieRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
