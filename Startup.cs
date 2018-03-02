@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using vidley.net.Data;
 
 namespace vidley.net
 {
@@ -33,6 +34,8 @@ namespace vidley.net
                 options.Database
                     = Configuration.GetSection("MongoConnection:Database").Value;
             });
+
+            services.AddSingleton<DbContext, DbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
