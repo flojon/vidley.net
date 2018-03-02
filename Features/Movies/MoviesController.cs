@@ -43,7 +43,7 @@ namespace vidley.net.Features.Movies
             var genre = await _genreRepository.Get(model.GenreId);
             var movie = new Movie(model, genre);
 
-            movie = await _repository.Add(movie);
+            await _repository.Add(movie);
 
             return movie;
         }
@@ -54,7 +54,7 @@ namespace vidley.net.Features.Movies
             var genre = await _genreRepository.Get(model.GenreId);
             var movie = new Movie(model, genre);
 
-            movie = await _repository.Update(id, movie);
+            await _repository.Update(id, movie); // TODO check if movie exist?
             if (movie == null)
                 return NotFound("No movie found with the given id");
 
@@ -64,9 +64,11 @@ namespace vidley.net.Features.Movies
         [HttpDelete("{id}")]
         public async Task<ActionResult<Movie>> Delete(string id)
         {
-            var movie = await _repository.Remove(id);
+            var movie = await Get(id);
             if (movie == null)
                 return NotFound("No movie found with the given id");
+
+            await _repository.Remove(id);
 
             return Ok(movie);
         }

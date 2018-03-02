@@ -16,16 +16,14 @@ namespace vidley.net.Features.Genres
             _context = context;
         }
 
-        public async Task<Genre> Add(Genre model)
+        public async Task Add(Genre model)
         {
-            await _context.Genres.InsertOneAsync(model);
-
-            return model;
+            await _context.Collection<Genre>().InsertOneAsync(model);
         }
 
         public async Task<IEnumerable<Genre>> GetAll()
         {
-            return await _context.Genres.Find(_ => true).ToListAsync();
+            return await _context.Collection<Genre>().Find(_ => true).ToListAsync();
         }
 
         public async Task<Genre> Get(string id)
@@ -33,19 +31,14 @@ namespace vidley.net.Features.Genres
             return await _context.Genres.Find(g => g.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<Genre> Remove(string id)
+        public async Task Remove(string id)
         {
-            var model = await Get(id);
             await _context.Genres.DeleteOneAsync(g => g.Id == id);
-
-            return model;
         }
 
-        public async Task<Genre> Update(string id, Genre model)
+        public async Task Update(string id, Genre model)
         {
             await _context.Genres.ReplaceOneAsync(g => g.Id == id, model);
-            
-            return await Get(id);
         }
     }
 }

@@ -16,11 +16,9 @@ namespace vidley.net.Features.Movies
             _context = context;
         }
 
-        public async Task<Movie> Add(Movie model)
+        public async Task Add(Movie model)
         {
             await _context.Movies.InsertOneAsync(model);
-
-            return model;
         }
 
         public async Task<IEnumerable<Movie>> GetAll()
@@ -33,19 +31,14 @@ namespace vidley.net.Features.Movies
             return await _context.Movies.Find(g => g.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<Movie> Remove(string id)
+        public async Task Remove(string id)
         {
-            var model = await Get(id);
             await _context.Movies.DeleteOneAsync(g => g.Id == id);
-
-            return model;
         }
 
-        public async Task<Movie> Update(string id, Movie model)
+        public async Task Update(string id, Movie model)
         {
             await _context.Movies.ReplaceOneAsync(g => g.Id == id, model);
-            
-            return await Get(id);
         }
     }
 }

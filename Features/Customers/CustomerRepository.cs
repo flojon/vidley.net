@@ -16,11 +16,9 @@ namespace vidley.net.Features.Customers
             _context = context;
         }
 
-        public async Task<Customer> Add(Customer model)
+        public async Task Add(Customer model)
         {
             await _context.Customers.InsertOneAsync(model);
-
-            return model;
         }
 
         public async Task<IEnumerable<Customer>> GetAll()
@@ -33,19 +31,14 @@ namespace vidley.net.Features.Customers
             return await _context.Customers.Find(g => g.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<Customer> Remove(string id)
+        public async Task Remove(string id)
         {
-            var model = await Get(id);
             await _context.Customers.DeleteOneAsync(g => g.Id == id);
-
-            return model;
         }
 
-        public async Task<Customer> Update(string id, Customer model)
+        public async Task Update(string id, Customer model)
         {
             await _context.Customers.ReplaceOneAsync(g => g.Id == id, model);
-            
-            return await Get(id);
         }
     }
 }
