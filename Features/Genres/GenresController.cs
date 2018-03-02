@@ -48,7 +48,7 @@ namespace vidley.net.Features.Genres
         public async Task<ActionResult<Genre>> Put(string id, Genre model)
         {
             await _repository.Update(id, model);
-            var genre = await Get(id);
+            var genre = await _repository.Get(id);
             if (genre == null)
                 return NotFound("No genre found with the given id");
 
@@ -58,7 +58,7 @@ namespace vidley.net.Features.Genres
         [HttpDelete("{id}")]
         public async Task<ActionResult<Genre>> Delete(string id)
         {
-            var genre = await Get(id);
+            var genre = await _repository.Get(id);
             if (genre == null)
                 return NotFound("No genre found with the given id");
 

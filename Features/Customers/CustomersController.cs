@@ -48,7 +48,7 @@ namespace vidley.net.Features.Customers
         public async Task<ActionResult<Customer>> Put(string id, Customer model)
         {
             await _repository.Update(id, model);
-            var customer = await Get(id);
+            var customer = await _repository.Get(id);
             if (customer == null)
                 return NotFound("No customer found with the given id");
 
@@ -58,7 +58,7 @@ namespace vidley.net.Features.Customers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Customer>> Delete(string id)
         {
-            var customer = await Get(id);
+            var customer = await _repository.Get(id);
             if (customer == null)
                 return NotFound("No customer found with the given id");
 

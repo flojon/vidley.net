@@ -73,7 +73,7 @@ namespace vidley.net.Features.Movies
         [HttpDelete("{id}")]
         public async Task<ActionResult<Movie>> Delete(string id)
         {
-            var movie = await Get(id);
+            var movie = await _repository.Get(id);
             if (movie == null)
                 return NotFound("No movie found with the given id");
 
