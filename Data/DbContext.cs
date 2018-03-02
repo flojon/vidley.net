@@ -2,7 +2,7 @@ using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using vidley.net.Features.Genres;
 using vidley.net;
-
+using vidley.net.Features.Customers;
 
 namespace vidley.net.Data
 {
@@ -20,6 +20,11 @@ namespace vidley.net.Data
         public IMongoCollection<Genre> Genres
         {
             get => _database.GetCollection<Genre>("genres");
+        }
+
+        public IMongoCollection<Customer> Customers
+        {
+            get => _database.GetCollection<Customer>("customers");
         }
     }
 }
