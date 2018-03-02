@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using vidley.net.Features.Genres;
 using System.Linq;
+using MongoDB.Bson;
+using System.Threading.Tasks;
+using vidley.net.Data;
 
 namespace vidley.net.Features.Genres
 {
@@ -10,28 +13,23 @@ namespace vidley.net.Features.Genres
     [ApiController]
     public class GenresController: ControllerBase
     {
-        static IList<GenreModel> Genres { get; set; }
+        private IRepository<Genre> _repository { get; }
 
-        static GenresController()
+        public GenresController(IRepository<Genre> repository)
         {
-            Genres = new List<GenreModel>();
-            Genres.Add(new GenreModel(1, "Romance"));
-            Genres.Add(new GenreModel(2, "Sci-fi"));
-            Genres.Add(new GenreModel(3, "Drama"));
-            Genres.Add(new GenreModel(4, "Adventure"));
-            Genres.Add(new GenreModel(5, "Comedy"));
+            this._repository = repository;
         }
 
         [HttpGet]
-        public IEnumerable<GenreModel> Get()
+        public async Task<IEnumerable<Genre>> Get()
         {           
-           return Genres;
+           return await _repository.GetAll();
         }
 
         [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        public async Task<ActionResult<Genre>> Get(string id)
         {
-            var genre = Genres.SingleOrDefault(g => g.Id == id);
+            var genre = await _repository.Get(id);
             if (genre == null)
                 return NotFound("No genre found with the given id");
 
@@ -39,36 +37,31 @@ namespace vidley.net.Features.Genres
         }
 
         [HttpPost]
-        public GenreModel Post(GenreModel model)
+        public async Task<Genre> Post(Genre model)
         {
-            model.Id = Genres.Max(g => g.Id) + 1;
-            Genres.Add(model);
+            model.Id = null; // Prevent user from sending Id in body
+            await _repository.Add(model);
 
             return model;
         }
 
         [HttpPut("{id}")]
-        public ActionResult Put(int id, GenreModel model)
+        public async Task<ActionResult<Genre>> Put(string id, Genre model)
         {
-            var genre = Genres.SingleOrDefault(g => g.Id == id);
+            model.Id = null; // Prevent user from sending Id in body
+            var genre = await _repository.Update(id, model);
             if (genre == null)
                 return NotFound("No genre found with the given id");
-
-            Genres.Remove(genre);
-            model.Id = id;
-            Genres.Add(model);
 
             return Ok(model);
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult<Genre>> Delete(string id)
         {
-            var genre = Genres.SingleOrDefault(g => g.Id == id);
+            var genre = await _repository.Remove(id);
             if (genre == null)
                 return NotFound("No genre found with the given id");
-
-            Genres.Remove(genre);
 
             return Ok(genre);
         }
