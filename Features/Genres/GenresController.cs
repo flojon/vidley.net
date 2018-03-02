@@ -39,21 +39,19 @@ namespace vidley.net.Features.Genres
         [HttpPost]
         public async Task<Genre> Post(Genre model)
         {
-            model.Id = null; // Prevent user from sending Id in body
-            await _repository.Add(model);
+            var genre = await _repository.Add(model);
 
-            return model;
+            return genre;
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Genre>> Put(string id, Genre model)
         {
-            model.Id = null; // Prevent user from sending Id in body
             var genre = await _repository.Update(id, model);
             if (genre == null)
                 return NotFound("No genre found with the given id");
 
-            return Ok(model);
+            return Ok(genre);
         }
 
         [HttpDelete("{id}")]

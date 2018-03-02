@@ -43,11 +43,9 @@ namespace vidley.net.Features.Genres
 
         public async Task<Genre> Update(string id, Genre model)
         {
-            model.Id = id;
             await _context.Genres.ReplaceOneAsync(g => g.Id == id, model);
-            //model.Id = id;
-
-            return model;
+            
+            return await Get(id);
         }
     }
 }
