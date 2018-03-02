@@ -38,9 +38,12 @@ namespace vidley.net.Features.Movies
         }
 
         [HttpPost]
-        public async Task<Movie> Post(MovieWriteDTO model)
+        public async Task<ActionResult<Movie>> Post(MovieWriteDTO model)
         {
             var genre = await _genreRepository.Get(model.GenreId);
+            if (genre == null)
+                return BadRequest("No genre found with the given id");
+
             var movie = new Movie(model, genre);
 
             await _repository.Add(movie);
@@ -52,6 +55,9 @@ namespace vidley.net.Features.Movies
         public async Task<ActionResult<Movie>> Put(string id, MovieWriteDTO model)
         {
             var genre = await _genreRepository.Get(model.GenreId);
+            if (genre == null)
+                return BadRequest("No genre found with the given id");
+
             var movie = new Movie(model, genre);
 
             await _repository.Update(id, movie); // TODO check if movie exist?
