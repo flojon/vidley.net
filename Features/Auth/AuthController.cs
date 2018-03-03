@@ -1,10 +1,7 @@
 using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Options;
 using vidley.net.Data;
 using vidley.net.Features.Users;
 
@@ -15,10 +12,13 @@ namespace vidley.net.Features.Auth
     public class AuthController: ControllerBase
     {
         private IRepository<User> _userRepository { get; }
+        private JwtSettings _jwtSettings { get; }
 
-        public AuthController(IRepository<User> userRepository)
+
+        public AuthController(IRepository<User> userRepository, IOptions<Settings> settings)
         {
             this._userRepository = userRepository;
+            this._jwtSettings = settings.Value.JwtSettings;
         }
 
         [HttpPost]
@@ -30,25 +30,8 @@ namespace vidley.net.Features.Auth
 
             if (!BCrypt.Net.BCrypt.Verify(auth.Password, user.Password))
                 return BadRequest("Login failed! Bad username or password");
-            
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.Name, user.Email),
-            };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super secret key to encrypt jwt tokens"));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                issuer: "yourdomain.com",
-                audience: "yourdomain.com",
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: creds);
-
-
-
-            return Ok(new JwtSecurityTokenHandler().WriteToken(token));
+            return Ok(user.GenerateJwtToken(_jwtSettings));
         }
     }
 }

@@ -33,6 +33,13 @@ namespace vidley.net
                     = Configuration.GetSection("MongoConnection:ConnectionString").Value;
                 options.Database
                     = Configuration.GetSection("MongoConnection:Database").Value;
+                options.JwtSettings = new JwtSettings
+                {
+                    Key = Configuration.GetSection("Jwt:Key").Value,
+                    Issuer = Configuration.GetSection("Jwt:Issuer").Value,
+                    Audience = Configuration.GetSection("Jwt:Audience").Value,
+                    TimeSpanMinutes = Configuration.GetValue<int>("Jwt:TimeSpanMinutes"),
+                };
             });
 
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
