@@ -28,7 +28,7 @@ namespace vidley.net.Features.Auth
             if (user == null)
                 return BadRequest("Login failed! Bad username or password");
 
-            if (!BCrypt.Net.BCrypt.Verify(auth.Password, user.Password))
+            if (!user.IsValidPassword(auth.Password))
                 return BadRequest("Login failed! Bad username or password");
 
             return Ok(user.GenerateJwtToken(_jwtSettings));

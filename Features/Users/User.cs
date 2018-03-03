@@ -36,6 +36,11 @@ namespace vidley.net.Features.Users
         [BsonElement("__v")]
         public int Version { get; set; }
 
+        public bool IsValidPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.Verify(password, this.Password);
+        }
+
         public string GenerateJwtToken(JwtSettings jwtSettings)
         {
             var claims = new[]
