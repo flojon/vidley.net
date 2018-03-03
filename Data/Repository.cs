@@ -68,5 +68,10 @@ namespace vidley.net.Data
         {
             await Collection.ReplaceOneAsync(g => g.Id == id, model);
         }
+
+        public async Task<IEnumerable<T>> Find(System.Linq.Expressions.Expression<System.Func<T, bool>> filter)
+        {
+            return await Collection.Find(filter).ToListAsync();
+        }
     }
 }
