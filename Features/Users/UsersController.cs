@@ -19,8 +19,8 @@ namespace vidley.net.Features.Users
         [HttpPost]
         public async Task<ActionResult<UserReadDTO>> Post(UserWriteDTO userParams)
         {
-            var existingUsers = await _repository.Find(u => u.Email == userParams.Email);
-            if (existingUsers != null && existingUsers.Count() > 0)
+            var existingUser = await _repository.FindOne(u => u.Email == userParams.Email);
+            if (existingUser != null)
                 return BadRequest("There is already a user registered with the given email");
 
             var user = userParams.ToUser();
