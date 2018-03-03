@@ -11,5 +11,6 @@ namespace vidley.net.Data
         Task Update(string id, T model);
         Task Remove(string id);
         Task<IEnumerable<T>> Find(System.Linq.Expressions.Expression<System.Func<T, bool>> filter);
+        Task<T> FindOne(System.Linq.Expressions.Expression<System.Func<T, bool>> filter);
     }    
 }

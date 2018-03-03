@@ -73,5 +73,10 @@ namespace vidley.net.Data
         {
             return await Collection.Find(filter).ToListAsync();
         }
+
+        public async Task<T> FindOne(System.Linq.Expressions.Expression<System.Func<T, bool>> filter)
+        {
+            return await Collection.Find(filter).FirstOrDefaultAsync();
+        }
     }
 }
