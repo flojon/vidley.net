@@ -6,11 +6,13 @@ using System.Linq;
 using MongoDB.Bson;
 using System.Threading.Tasks;
 using vidley.net.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace vidley.net.Features.Customers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CustomersController: ControllerBase
     {
         private IRepository<Customer> _repository { get; }

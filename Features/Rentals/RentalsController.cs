@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using vidley.net.Data;
 using vidley.net.Features.Customers;
@@ -9,6 +10,7 @@ namespace vidley.net.Features.Rentals
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RentalsController: ControllerBase
     {
         public IRepository<Rental> _rentalRepository { get; }

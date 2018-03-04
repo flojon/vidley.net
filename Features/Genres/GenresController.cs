@@ -6,11 +6,13 @@ using System.Linq;
 using MongoDB.Bson;
 using System.Threading.Tasks;
 using vidley.net.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace vidley.net.Features.Genres
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class GenresController: ControllerBase
     {
         private IRepository<Genre> _repository { get; }
@@ -21,12 +23,14 @@ namespace vidley.net.Features.Genres
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IEnumerable<Genre>> Get()
         {           
            return await _repository.GetAll();
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Genre>> Get(string id)
         {
             var genre = await _repository.Get(id);

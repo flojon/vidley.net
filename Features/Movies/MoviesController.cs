@@ -5,11 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using vidley.net.Data;
 using vidley.net.Features.Genres;
+using Microsoft.AspNetCore.Authorization;
 
 namespace vidley.net.Features.Movies
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MoviesController: ControllerBase
     {
         private IRepository<Movie> _repository { get; }
@@ -22,12 +24,14 @@ namespace vidley.net.Features.Movies
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IEnumerable<Movie>> Get()
         {           
            return await _repository.GetAll();
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Movie>> Get(string id)
         {
             var movie = await _repository.Get(id);

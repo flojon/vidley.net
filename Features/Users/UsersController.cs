@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using vidley.net.Data;
 
@@ -7,6 +8,7 @@ namespace vidley.net.Features.Users
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class UsersController: ControllerBase
     {
         private IRepository<User> _repository { get; }
