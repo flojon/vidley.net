@@ -62,6 +62,8 @@ namespace vidley.net
                         };
                     });
 
+            services.AddCors();
+
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
         }
 
@@ -76,6 +78,8 @@ namespace vidley.net
             {
                 app.UseHsts();
             }
+
+            app.UseCors(builder => builder.WithOrigins("https://localhost:4200"));
 
             app.UseAuthentication();
 
