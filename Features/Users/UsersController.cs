@@ -18,6 +18,15 @@ namespace vidley.net.Features.Users
             this._repository = repository;
         }
 
+        [HttpGet("me")]
+        public async Task<UserReadDTO> GetCurrentUser()
+        {
+            var email = User.Identity.Name;
+            var user = await _repository.FindOne(u => u.Email == email);
+            
+            return new UserReadDTO(user);
+        }
+
         [HttpPost]
         public async Task<ActionResult<UserReadDTO>> Post(UserWriteDTO userParams)
         {
