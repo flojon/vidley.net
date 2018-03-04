@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using vidley.net;
 
@@ -49,9 +51,18 @@ namespace vidley.net.Data
             await Collection.InsertOneAsync(model);
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, object>> sortBy = null, bool sortDescending = false)
         {
-            return await Collection.Find(_ => true).ToListAsync();
+            var query = Collection.Find(_ => true);
+            if (sortBy != null) {
+                if (sortDescending) {
+                    query = query.SortByDescending(sortBy);
+                } else {
+                    query = query.SortBy(sortBy);
+                }
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task<T> Get(string id)

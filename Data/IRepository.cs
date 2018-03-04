@@ -1,11 +1,13 @@
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace vidley.net.Data
 {
     public interface IRepository<T>
     {
-        Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<T>> GetAll(Expression<Func<T, object>> sortBy = null, bool sortDescending = false);
         Task<T> Get(string id);
         Task Add(T model);
         Task Update(string id, T model);
