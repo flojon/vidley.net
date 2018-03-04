@@ -26,7 +26,7 @@ namespace vidley.net.Features.Genres
         [AllowAnonymous]
         public async Task<IEnumerable<Genre>> Get()
         {           
-           return await _repository.GetAll();
+           return await _repository.GetAll(g => g.Name);
         }
 
         [HttpGet("{id}")]
