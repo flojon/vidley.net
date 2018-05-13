@@ -7,7 +7,7 @@ namespace vidley.net.Data
 {
     public interface IRepository<T>
     {
-        Task<IEnumerable<T>> GetAll(Expression<Func<T, object>> sortBy = null, bool sortDescending = false);
+        Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> filter = null, Expression<Func<T, object>> sortBy = null, bool sortDescending = false);
         Task<T> Get(string id);
         Task Add(T model);
         Task Update(string id, T model);

@@ -25,9 +25,12 @@ namespace vidley.net.Features.Movies
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IEnumerable<Movie>> Get()
-        {           
-           return await _repository.GetAll();
+        public async Task<IEnumerable<Movie>> GetAll(string genreId)
+        {
+            if (genreId == null)
+                return await _repository.GetAll();
+            else
+                return await _repository.GetAll(m => m.Genre.Id == genreId);
         }
 
         [HttpGet("{id}")]

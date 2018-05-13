@@ -51,9 +51,9 @@ namespace vidley.net.Data
             await Collection.InsertOneAsync(model);
         }
 
-        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, object>> sortBy = null, bool sortDescending = false)
+        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> filter = null, Expression<Func<T, object>> sortBy = null, bool sortDescending = false)
         {
-            var query = Collection.Find(_ => true);
+            var query = filter == null ? Collection.Find(_ => true) : Collection.Find(filter);
             if (sortBy != null) {
                 if (sortDescending) {
                     query = query.SortByDescending(sortBy);
