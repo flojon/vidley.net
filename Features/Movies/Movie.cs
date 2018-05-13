@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using vidley.net.Data;
 using vidley.net.Features.Genres;
 
@@ -13,6 +14,7 @@ namespace vidley.net.Features.Movies
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonIgnoreIfDefault]
+        [JsonProperty("_id")]
         public string Id { get; private set; }
 
         [Required]

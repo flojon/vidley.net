@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using vidley.net.Data;
 
 namespace vidley.net.Features.Customers
@@ -11,6 +12,7 @@ namespace vidley.net.Features.Customers
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonIgnoreIfDefault]
+        [JsonProperty("_id")]
         public string Id { get; private set; }
         
         [Required]

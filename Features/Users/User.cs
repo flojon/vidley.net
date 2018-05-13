@@ -15,6 +15,7 @@ namespace vidley.net.Features.Users
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonIgnoreIfDefault]
+        [JsonProperty("_id")]
         public string Id { get; private set; }
 
         [BsonRequired]

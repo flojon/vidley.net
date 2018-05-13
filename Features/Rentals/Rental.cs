@@ -1,6 +1,7 @@
 using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 using vidley.net.Data;
 using vidley.net.Features.Customers;
 using vidley.net.Features.Movies;
@@ -11,6 +12,7 @@ namespace vidley.net.Features.Rentals
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
+        [JsonProperty("_id")]
         public string Id { get; set; }
 
         [BsonElement("name")]
@@ -30,6 +32,7 @@ namespace vidley.net.Features.Rentals
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
+        [JsonProperty("_id")]
         public string Id { get; set; }
 
         [BsonElement("title")]
@@ -46,6 +49,7 @@ namespace vidley.net.Features.Rentals
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonIgnoreIfDefault]
+        [JsonProperty("_id")]
         public string Id { get; private set; }
 
         [BsonElement("customer")]
