@@ -79,7 +79,10 @@ namespace vidley.net
                 app.UseHsts();
             }
 
-            app.UseCors(builder => builder.WithOrigins("https://localhost:4200"));
+            app.UseCors(builder => builder.WithOrigins("https://localhost:4200")
+                                    .AllowAnyMethod()
+                                    .WithHeaders(new []{"authorization",  "content-type"})
+            );
 
             app.UseAuthentication();
 
